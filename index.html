@@ -207,6 +207,35 @@
       font-size: 13px;
     }
 
+    .card-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .access {
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+    }
+
+    .access.free {
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, .12);
+      border: 1px solid rgba(52, 211, 153, .32);
+    }
+
+    .access.open {
+      color: #fed7aa;
+      background: rgba(234, 88, 12, .12);
+      border: 1px solid rgba(251, 146, 60, .34);
+    }
+
     .tags {
       display: flex;
       flex-wrap: wrap;
@@ -251,6 +280,19 @@
     .resource span:first-child { font-weight: 650; }
     .resource span:last-child { color: var(--cyan); font-size: 13px; }
 
+    .resource.practice {
+      border-color: rgba(52, 211, 153, .32);
+      background: linear-gradient(135deg, rgba(6, 78, 59, .22), rgba(30, 41, 59, .74));
+    }
+
+    .resource.practice:hover {
+      border-color: rgba(52, 211, 153, .70);
+      background: linear-gradient(135deg, rgba(6, 95, 70, .30), rgba(15, 23, 42, .96));
+    }
+
+    .resource.practice span:last-child { color: #6ee7b7; }
+
+
     .boss {
       border-color: rgba(251, 113, 133, .45);
       background:
@@ -274,91 +316,134 @@
       .mission-number { position: relative; top: 0; height: 62px; width: 92px; }
       .resources { grid-template-columns: 1fr; }
       .card-head { flex-direction: column; }
-      .time { white-space: normal; }
+      .card-meta { align-items: flex-start; }
+      .time, .access { white-space: normal; }
     }
   </style>
 </head>
 <body>
   <main class="container">
     <section class="hero">
-      <div class="badge">⚔️ Month 1 Roadmap</div>
+      <div class="badge">⚔️ Month 1 Roadmap • Free Start</div>
       <h1>Cybersecurity Foundations <span class="gradient-text">Bootcamp</span></h1>
-      <p>A structured first-month path for computer engineers moving into cybersecurity: foundations, networking, web security, cryptography, exploitation, privilege escalation, PortSwigger labs, and a final internal-network challenge.</p>
+      <p>A beginner-first path through computer and operating-system foundations, networking, web security, cryptography, exploitation, and privilege escalation. Missions 01–05 use free resources only, and every dedicated practice room stays inside the mission whose theory prepares you for it.</p>
       <div class="stats">
-        <div class="stat"><strong>11</strong><span>Missions</span></div>
-        <div class="stat"><strong>140–160h</strong><span>Total estimated time</span></div>
-        <div class="stat"><strong>2</strong><span>Main platforms</span></div>
-        <div class="stat"><strong>1</strong><span>Final boss network</span></div>
+        <div class="stat"><strong>13</strong><span>Missions</span></div>
+        <div class="stat"><strong>65</strong><span>Total resources</span></div>
+        <div class="stat"><strong>177</strong><span>Hours bootcamp</span></div>
+        <div class="stat"><strong>7</strong><span>Paired practice rooms</span></div>
       </div>
     </section>
 
     <div class="section-title">
       <h2>Learning Path</h2>
-      <span class="pill">TryHackMe + PortSwigger Academy</span>
     </div>
 
     <section class="timeline" id="roadmap"></section>
 
-    <p class="footer">Designed as a roadmap-style learning path. Use the links, complete each mission, then move to the next phase.</p>
+    <p class="footer">Free-access status for Missions 01–05 was checked on July 27, 2026. Green resource cards are practical challenge rooms placed after their prerequisite theory.</p>
   </main>
 
   <script>
     const missions = [
       {
-        no: '01', title: 'PreSecurity Foundations', time: '15–20h',
-        objective: 'Build the basic networking, web, Linux, and security knowledge needed before touching offensive labs.',
-        tags: ['Foundations', 'Beginner', 'TryHackMe Path'],
+        no: '01', title: 'Cybersecurity Orientation & Research', time: '5–7h',
+        objective: 'Understand offensive and defensive security, explore career directions, learn how to research unfamiliar problems, and see how the components inside a computer work.',
+        access: 'Free', accessClass: 'free',
+        tags: ['Cybersecurity Basics', 'Research', 'Computer Fundamentals', 'Beginner'],
+        links: [
+          ['Offensive Security Intro', 'https://tryhackme.com/room/offensivesecurityintro'],
+          ['Defensive Security Intro', 'https://tryhackme.com/room/defensivesecurityintro'],
+          ['Careers in Cyber', 'https://tryhackme.com/room/careersincyber'],
+          ['Introductory Researching', 'https://tryhackme.com/room/introtoresearch'],
+          ['Inside a Computer System', 'https://tryhackme.com/room/insideacomputer']
+        ]
+      },
+      {
+        no: '02', title: 'Operating Systems, Data & Connectivity', time: '7–9h',
+        objective: 'Build the system-level foundation needed for later security work: operating-system concepts, Windows basics, binary and data encoding, then a first mental model of connected devices.',
+        access: 'Free', accessClass: 'free',
+        tags: ['Operating Systems', 'Windows', 'Data', 'Networking Primer'],
+        links: [
+          ['Operating Systems: Introduction', 'https://tryhackme.com/room/operatingsystemsintroduction'],
+          ['Windows Basics', 'https://tryhackme.com/room/windowsbasics'],
+          ['Data Representation', 'https://tryhackme.com/room/datarepresentation'],
+          ['Data Encoding', 'https://tryhackme.com/room/dataencoding'],
+          ['What is Networking?', 'https://tryhackme.com/room/whatisnetworking']
+        ]
+      },
+      {
+        no: '03', title: 'Networking, Enumeration & Services', time: '12–16h',
+        objective: 'Progress from LAN and protocol fundamentals into port scanning, service enumeration, common network services, and DNS—the core workflow used before exploitation.',
+        access: 'Free', accessClass: 'free',
+        tags: ['LAN', 'TCP/IP', 'Nmap', 'Services', 'DNS'],
+        links: [
+          ['Intro to LAN', 'https://tryhackme.com/room/introtolan'],
+          ['Introductory Networking', 'https://tryhackme.com/room/introtonetworking'],
+          ['Network Services', 'https://tryhackme.com/room/networkservices'],
+          ['Network Services 2', 'https://tryhackme.com/room/networkservices2'],
+          ['Nmap', 'https://tryhackme.com/room/furthernmap'],
+          ['DNS in Detail', 'https://tryhackme.com/room/dnsindetail']
+        ]
+      },
+      {
+        no: '04', title: 'Web Foundations & First Exploitation', time: '12–18h',
+        objective: 'Learn HTTP and web reconnaissance, study the OWASP risk categories and SQL injection, practise in Juice Shop, then apply the combined workflow on Pickle Rick.',
+        access: 'Free', accessClass: 'free',
+        tags: ['HTTP', 'Web Recon', 'OWASP', 'SQLi', 'Practice Lab'],
+        links: [
+          ['HTTP in Detail', 'https://tryhackme.com/room/httpindetail'],
+          ['Google Dorking', 'https://tryhackme.com/r/room/googledorking'],
+          ['OWASP Top 10 — 2025 Part 1', 'https://tryhackme.com/room/owasptopten2025one'],
+          ['OWASP Top 10 — 2025 Part 2', 'https://tryhackme.com/room/owasptopten2025two'],
+          ['OWASP Top 10 — 2025 Part 3', 'https://tryhackme.com/room/owasptopten2025three'],
+          ['SQL Injection', 'https://tryhackme.com/r/room/sqlinjectionlm'],
+          ['OWASP Juice Shop', 'https://tryhackme.com/room/owaspjuiceshop'],
+          ['Pickle Rick', 'https://tryhackme.com/room/picklerick', 'practice']
+        ]
+      },
+      {
+        no: '05', title: 'Security Principles, Cryptography & Password Attacks', time: '8–11h',
+        objective: 'Learn the CIA triad and cryptographic concepts before moving into practical encryption and online password attacks with Hydra.',
+        access: 'Free', accessClass: 'free',
+        tags: ['CIA Triad', 'Cryptography', 'Encryption', 'Hydra', 'Hands-on'],
+        links: [
+          ['The CIA Triad', 'https://tryhackme.com/room/theciatriad'],
+          ['Cryptography Concepts', 'https://tryhackme.com/room/cryptographyconcepts'],
+          ['Cryptography Basics', 'https://tryhackme.com/room/cryptographybasics'],
+          ['Encryption — Crypto 101', 'https://tryhackme.com/room/encryptioncrypto101'],
+          ['Hydra', 'https://tryhackme.com/r/room/hydra']
+        ]
+      },
+      {
+        no: '06', title: 'Finish the Remaining Pre Security Path', time: '12–18h',
+        objective: 'Return to the complete TryHackMe path and finish the rooms not already covered in Missions 01–05. This is where premium-only foundation rooms are intentionally allowed.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['Foundation Completion', 'TryHackMe Path', 'Premium Rooms'],
         links: [['PreSecurity Learning Path', 'https://tryhackme.com/path/outline/presecurity']]
       },
       {
-        no: '02', title: 'Core Technical Fundamentals', time: '15h',
-        objective: 'Learn how networks, websites, HTTP, Burp Suite, services, and basic OWASP concepts work.',
-        tags: ['Networking', 'Web Basics', 'Burp Suite', 'OWASP'],
+        no: '07', title: 'Advanced Cryptography & Password Cracking', time: '8–12h',
+        objective: 'Extend the free cryptography foundation into public-key systems, hashing, hash recognition, offline cracking, and John the Ripper.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['Public Key Crypto', 'Hashing', 'Password Cracking', 'John'],
         links: [
-          ['Introductory Researching', 'https://tryhackme.com/room/introtoresearch'],
-          ['Introductory Networking', 'https://tryhackme.com/room/introtonetworking'],
-          ['Nmap', 'https://tryhackme.com/room/furthernmap'],
-          ['Network Services', 'https://tryhackme.com/room/networkservices'],
-          ['Network Services 2', 'https://tryhackme.com/room/networkservices2'],
-          ['How Websites Work', 'https://tryhackme.com/room/howwebsiteswork'],
-          ['HTTP in Detail', 'https://tryhackme.com/room/httpindetail'],
-          ['Burp Suite: The Basics', 'https://tryhackme.com/room/burpsuitebasics'],
-          ['OWASP Top 10 — 2021', 'https://tryhackme.com/room/owasptop10']
-        ]
-      },
-      {
-        no: '03', title: 'First Web Exploits', time: '10–12h',
-        objective: 'Start exploiting real web vulnerabilities using beginner-friendly rooms and intentionally vulnerable apps.',
-        tags: ['Web Security', 'API Security', 'CTF Intro'],
-        links: [
-          ['OWASP API Security Top 10', 'https://tryhackme.com/room/owaspapisecuritytop105w'],
-          ['OWASP Juice Shop', 'https://tryhackme.com/room/owaspjuiceshop'],
-          ['Upload Vulnerabilities', 'https://tryhackme.com/room/uploadvulns'],
-          ['Pickle Rick', 'https://tryhackme.com/room/picklerick']
-        ]
-      },
-      {
-        no: '04', title: 'Cryptography & Password Attacks', time: '8–10h',
-        objective: 'Understand hashing, encryption, public-key cryptography, and password cracking with John the Ripper.',
-        tags: ['Crypto', 'Hashing', 'Password Cracking'],
-        links: [
-          ['Hashing — Crypto 101', 'https://tryhackme.com/room/hashingcrypto101'],
-          ['John the Ripper: The Basics', 'https://tryhackme.com/room/johntheripperbasics'],
-          ['Encryption — Crypto 101', 'https://tryhackme.com/room/encryptioncrypto101'],
-          ['Cryptography Basics', 'https://tryhackme.com/room/cryptographybasics'],
           ['Public Key Cryptography Basics', 'https://tryhackme.com/room/publickeycrypto'],
-          ['Hashing Basics', 'https://tryhackme.com/room/hashingbasics']
+          ['Hashing — Crypto 101', 'https://tryhackme.com/room/hashingcrypto101'],
+          ['Hashing Basics', 'https://tryhackme.com/room/hashingbasics'],
+          ['John the Ripper: The Basics', 'https://tryhackme.com/room/johntheripperbasics']
         ]
       },
       {
-        no: '05', title: 'Windows, Linux & Offensive Tooling', time: '15h',
-        objective: 'Build comfort with Windows, PowerShell, Linux shells, Active Directory basics, and Metasploit workflows.',
+        no: '08', title: 'Windows, Linux, Active Directory & Metasploit', time: '14–18h',
+        objective: 'Build command-line fluency, learn Active Directory fundamentals and a Windows vulnerability, then follow the Metasploit workflow from setup through exploitation and Meterpreter.',
+        access: 'Premium allowed', accessClass: 'open',
         tags: ['Windows', 'Linux', 'Active Directory', 'Metasploit'],
         links: [
-          ['Active Directory Basics', 'https://tryhackme.com/room/winadbasics'],
           ['Windows Command Line', 'https://tryhackme.com/room/windowscommandline'],
           ['Windows PowerShell', 'https://tryhackme.com/room/windowspowershell'],
           ['Linux Shells', 'https://tryhackme.com/room/linuxshells'],
+          ['Active Directory Basics', 'https://tryhackme.com/room/winadbasics'],
           ['Moniker Link — CVE-2024-21413', 'https://tryhackme.com/room/monikerlink'],
           ['Metasploit: Introduction', 'https://tryhackme.com/room/metasploitintro'],
           ['Metasploit: Exploitation', 'https://tryhackme.com/room/metasploitexploitation'],
@@ -366,69 +451,64 @@
         ]
       },
       {
-        no: '06', title: 'Shells, Privilege Escalation & Practice Machines', time: '15–20h',
-        objective: 'Move from basic exploitation to shells, enumeration, Linux privilege escalation, and beginner practice boxes.',
-        tags: ['Shells', 'Linux PrivEsc', 'Practice Machines'],
+        no: '09', title: 'Shells, Privilege Escalation & Practice Machines', time: '18–25h',
+        objective: 'Learn shell handling and Linux privilege-escalation techniques, then apply them immediately on the same three beginner practice machines from the original roadmap.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['Shells', 'Linux PrivEsc', 'Theory → Practice', 'Beginner Machines'],
         links: [
           ['What the Shell?', 'https://tryhackme.com/room/introtoshells'],
           ['Common Linux Privesc', 'https://tryhackme.com/room/commonlinuxprivesc'],
           ['Linux PrivEsc', 'https://tryhackme.com/room/linuxprivesc'],
-          ['Vulnversity', 'https://tryhackme.com/room/vulnversity'],
-          ['Basic Pentesting', 'https://tryhackme.com/room/basicpentestingjt'],
-          ['Kenobi', 'https://tryhackme.com/room/kenobi']
+          ['Vulnversity', 'https://tryhackme.com/room/vulnversity', 'practice'],
+          ['Basic Pentesting', 'https://tryhackme.com/room/basicpentestingjt', 'practice'],
+          ['Kenobi', 'https://tryhackme.com/room/kenobi', 'practice']
         ]
       },
       {
-        no: '07', title: 'PortSwigger: SQL Injection', time: '8–12h',
-        objective: 'Study the full SQL Injection module and complete the labs to understand detection, exploitation, and impact.',
-        tags: ['PortSwigger', 'SQLi', 'Web Exploitation'],
-        links: [['SQL Injection Academy Module', 'https://portswigger.net/web-security/sql-injection']]
-      },
-      {
-        no: '08', title: 'PortSwigger: SSRF', time: '3–5h',
-        objective: 'Study server-side request forgery concepts and practice SSRF exploitation through PortSwigger labs.',
-        tags: ['PortSwigger', 'SSRF'],
-        links: [['SSRF Academy Module', 'https://portswigger.net/web-security/ssrf']]
-      },
-      {
-        no: '09A', title: 'Recon, Discovery & Authentication', time: '8h',
-        objective: 'Learn how to inspect applications, discover hidden content, bypass authentication, and validate skills on Overpass.',
-        tags: ['Recon', 'Authentication', 'Practice Lab'],
+        no: '10', title: 'Web Discovery, Burp & Authentication', time: '10–14h',
+        objective: 'Map how web applications work, discover hidden content, inspect traffic with Burp Suite, study authentication bypasses, and finish by applying the workflow on Overpass.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['Application Mapping', 'Content Discovery', 'Burp', 'Authentication'],
         links: [
+          ['How Websites Work', 'https://tryhackme.com/room/howwebsiteswork'],
           ['Walking An Application', 'https://tryhackme.com/r/room/walkinganapplication'],
           ['Content Discovery', 'https://tryhackme.com/r/room/contentdiscovery'],
+          ['Burp Suite: The Basics', 'https://tryhackme.com/room/burpsuitebasics'],
           ['Authentication Bypass', 'https://tryhackme.com/r/room/authenticationbypass'],
-          ['Practice Lab: Overpass', 'https://tryhackme.com/r/room/overpass']
+          ['Overpass', 'https://tryhackme.com/r/room/overpass', 'practice']
         ]
       },
       {
-        no: '09B', title: 'Enumeration, Access Control & File Inclusion', time: '10h',
-        objective: 'Practice Google dorking, Hydra, subdomain enumeration, IDOR, file inclusion, then apply them on LazyAdmin.',
-        tags: ['Enumeration', 'IDOR', 'File Inclusion', 'Practice Lab'],
+        no: '11', title: 'API, Enumeration, Access Control & File Attacks', time: '10–14h',
+        objective: 'Study API risks, upload flaws, subdomain enumeration, IDOR and file inclusion, then use the accumulated web-enumeration skills on rrootme.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['API Security', 'Uploads', 'Subdomains', 'IDOR', 'File Inclusion'],
         links: [
-          ['Google Dorking', 'https://tryhackme.com/r/room/googledorking'],
-          ['Hydra', 'https://tryhackme.com/r/room/hydra'],
+          ['OWASP API Security Top 10', 'https://tryhackme.com/room/owaspapisecuritytop105w'],
+          ['Upload Vulnerabilities', 'https://tryhackme.com/room/uploadvulns'],
           ['Subdomain Enumeration', 'https://tryhackme.com/r/room/subdomainenumeration'],
           ['IDOR', 'https://tryhackme.com/r/room/idor'],
           ['File Inclusion', 'https://tryhackme.com/r/room/fileinc'],
-          ['Practice Lab: LazyAdmin', 'https://tryhackme.com/r/room/lazyadmin']
+          ['Root Me', 'https://tryhackme.com/room/rrootme', 'practice']
         ]
       },
       {
-        no: '10', title: 'Web Exploitation Combo', time: '10h',
-        objective: 'Combine SSRF, XSS, command injection, and SQL injection fundamentals, then practice on Ignite.',
-        tags: ['SSRF', 'XSS', 'Command Injection', 'SQLi'],
+        no: '12', title: 'Advanced Web Exploitation & Practice', time: '15–22h',
+        objective: 'Deepen SQL injection, XSS, command injection and SSRF through PortSwigger, then complete Ignite as the practical challenge for the block.',
+        access: 'Premium allowed', accessClass: 'open',
+        tags: ['PortSwigger', 'SQLi', 'XSS', 'Command Injection', 'SSRF'],
         links: [
-          ['SSRF', 'https://tryhackme.com/r/room/ssrfqi'],
+          ['SQL Injection Academy Module', 'https://portswigger.net/web-security/sql-injection'],
           ['Cross-Site Scripting', 'https://tryhackme.com/r/room/xss'],
           ['OS Command Injection', 'https://tryhackme.com/r/room/oscommandinjection'],
-          ['SQL Injection', 'https://tryhackme.com/r/room/sqlinjectionlm'],
-          ['Practice Lab: Ignite', 'https://tryhackme.com/r/room/ignite']
+          ['SSRF Academy Module', 'https://portswigger.net/web-security/ssrf'],
+          ['Ignite', 'https://tryhackme.com/r/room/ignite', 'practice']
         ]
       },
       {
-        no: '11', title: 'Final Boss: Wreath Network', time: '15–25h', boss: true,
+        no: '13', title: 'Final Boss: Wreath Network', time: '15–25h', boss: true,
         objective: 'Compromise an initial server, pivot through the internal network, enumerate machines, and attack additional hosts.',
+        access: 'Premium allowed', accessClass: 'open',
         tags: ['Network Pentest', 'Pivoting', 'Final Challenge'],
         links: [['Wreath Network', 'https://tryhackme.com/r/room/wreath']]
       }
@@ -447,11 +527,14 @@
               <h3>${mission.title}</h3>
               <p class="objective">${mission.objective}</p>
             </div>
-            <div class="time">⏱ ${mission.time}</div>
+            <div class="card-meta">
+              <div class="access ${mission.accessClass}">${mission.access}</div>
+              <div class="time">⏱ ${mission.time}</div>
+            </div>
           </div>
           <div class="tags">${mission.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="resources">
-            ${mission.links.map(([label, url]) => `<a class="resource" href="${url}" target="_blank" rel="noopener"><span>${label}</span><span>Open ↗</span></a>`).join('')}
+            ${mission.links.map(([label, url, kind]) => `<a class="resource ${kind === 'practice' ? 'practice' : ''}" href="${url}" target="_blank" rel="noopener"><span>${label}</span><span>${kind === 'practice' ? 'Practice ↗' : 'Open ↗'}</span></a>`).join('')}
           </div>
         </div>
       `;
